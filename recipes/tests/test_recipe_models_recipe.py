@@ -14,7 +14,7 @@ class RecipeModelTest(RecipeTestBase):
             author=self.make_author(username='User1'),
             title='Receita',
             description='Uma receita legal',
-            slug='receita-slug',
+            slug='receita-slug-for-no-defaults',
             preparation_time=10,
             preparation_time_unit='Minutos',
             servings=5,
@@ -32,7 +32,7 @@ class RecipeModelTest(RecipeTestBase):
         ('servings_unit', 65),
     ])
     def test_recipe_fields_max_length(self, field, max_length):
-        setattr(self.recipe, field, 'A' * (max_length + 0))
+        setattr(self.recipe, field, 'A' * (max_length + 1))
         with self.assertRaises(ValidationError):
             self.recipe.full_clean()
 
@@ -48,4 +48,15 @@ class RecipeModelTest(RecipeTestBase):
         self.assertFalse(
             recipe.is_published,
             msg='Recipe is_published is not False'
+        )
+
+    def test_recipe_string_representation(self):
+        needed = 'Titulo de teste'
+        self.recipe.title = needed
+        self.recipe.full_clean()
+        self.recipe.save()
+        self.assertEqual(
+            str(self.recipe), needed,
+            msg='Recipe string representation must be'
+            f' {needed} but {str(self.recipe)} was received'
         )
