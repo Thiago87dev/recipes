@@ -1,11 +1,9 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from utils.browser import make_chrome_browser
 from selenium.webdriver.common.by import By
-import pytest
 import time
 
 
-@pytest.mark.functional_test
 class AuthorsBaseTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         self.browser = make_chrome_browser()
