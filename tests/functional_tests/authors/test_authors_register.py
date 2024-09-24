@@ -4,8 +4,6 @@ from .base import AuthorsBaseTest
 
 
 class AuthorsRegisterTest(AuthorsBaseTest):
-    def get_by_placeholder(self, web_element, placeholder):
-        return web_element.find_element(By.XPATH, f'//input[@placeholder="{placeholder}"]')
 
     def fill_form_dummy_data(self, form):
         fields = form.find_elements(By.TAG_NAME, 'input')
@@ -102,8 +100,6 @@ class AuthorsRegisterTest(AuthorsBaseTest):
         self.get_by_placeholder(form, 'Your password').send_keys('P@ssword123')
         self.get_by_placeholder(
             form, 'Repeat your password').send_keys('P@ssword123')
-
-        self.sleep(2)
 
         form.submit()
 
